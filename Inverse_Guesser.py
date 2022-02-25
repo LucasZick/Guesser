@@ -1,13 +1,14 @@
 import random
 
-def setNum():
-    return random.randint(1,20)
+def setNum(maxim):
+    return random.randint(1,maxim)
 
 def Attempt():
     dis = 0
     best = 0
-    num = setNum()
-    attempts = int(input('\nHow many attempts do you think you need to guess a random number between 1 and 20? \n\n'))
+    maxim = int(input('\nWhat is the range that you want to be considered to the guesser?\n\n'))
+    num = setNum(maxim)
+    attempts = int(input(f'\nHow many attempts do you think you need to guess a random number between 1 and {maxim}? \n\n'))
     for i in range (attempts):
         if i == 0:
             choice = int(input("\nSo, the number is...?\n\n"))
@@ -19,7 +20,7 @@ def Attempt():
         if dis <= best:
            best = dis
 
-        if choice < 1 or choice > 20:
+        if choice < 1 or choice > maxim:
             print ('\nYou trolled my game :(\n')
             break
 
