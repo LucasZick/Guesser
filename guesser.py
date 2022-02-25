@@ -57,4 +57,4 @@ def run():
 while play != 0:
     run()
     play=int(input('Do you want to play more? \n\n                 0 -- No\n    Something else -- Yes\n\n'))
-    print ('________________________________________________________')
+    print ('________________________________________________________\n')
