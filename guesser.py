@@ -1,49 +1,60 @@
 import random
 
-def setNum():
-    return random.randint(1,20)
+play = 1
 
-def Attempt():
-    dis = 0
-    best = 0
-    num = setNum()
-    attempts = int(input('\nHow many attempts do you think you need to guess a random number between 1 and 20? \n\n'))
-    for i in range (attempts):
-        if i == 0:
-            choice = int(input("\nSo, the number is...?\n\n"))
-        
-        else:
-            choice = int(input(f'You have {attempts-i} more attempts! Good luck \n\n'))
-        dis = choice - num
-        best = abs(dis)
-        if dis <= best:
-           best = dis
+def attempt(possib):
+    return random.choice(possib)
 
-        if choice < 1 or choice > 20:
-            print ('\nYou trolled my game :(\n')
+def defineChances():
+    print ('________________________________________________________')
+    chances = int(input('\nHow many chances do I have to find your secret number?\n'))
+    print ('________________________________________________________')
+    return chances
+
+def defineMaxim():
+    maxim = int(input('\nWhat is the range of your choice?\n'))
+    print ('________________________________________________________')
+    return maxim
+
+def numbers(maxim):
+    possib = []
+    for i in range(maxim):
+        possib.append(i+1)
+    return possib
+
+def run():
+    chances=defineChances()
+    maxim=defineMaxim()
+    poss=numbers(maxim)
+    for i in range(chances):
+        attemp = attempt(poss)
+        ind = poss.index(attemp)
+        if len(poss)==1:
+            print(f'\nYour number is {poss[0]}! Did it in {i} attempts\n')
             break
+        print (f'________________________________________________________\n\nI still have {chances-i} attempts, and I guess your number is {attemp}')
+        result = int(input('\n    1 -- that is too small\n    2 -- that is too big\n    3 -- that is my number!\n\n'))
+        if result == 1:
+            try:
+                poss = poss[ind+1:]
+            except ValueError:
+                print('Why are you trying to fool me?')
 
-        if choice == num:
-            print('\nWow, you might be a wizard!\n')
-            break
+        elif result == 2:
+            try:
+                poss = poss[:ind]
+            except ValueError:
+                print('Why are you trying to fool me?')
 
-        else:
-            str = ''
-            if choice < num and i != attempts-1:
-                str = 'bigger'
+        elif result == 3:
+            try:
+                poss = [attemp]
+            except ValueError:
+                print('Stop kidding me! ')
+    print ('________________________________________________________')
+    print ('________________________________________________________\n')
 
-            elif choice > num and i != attempts-1:
-                str = 'smaller'
-            print(f'\nNope, Try a {str} number\n')
-
-    print(f'The number was {num}!\n')
-    if best != 0:
-        print (f'You missed by {abs(best)} at your best attempt.\n\n')
-    
-    restart = input('Type "1" if you want to play more and something else to stop playing: ')
-    if restart == '1':
-        Attempt()
-            
-
-        
-Attempt()
+while play != 0:
+    run()
+    play=int(input('Do you want to play more? \n\n                 0 -- No\n    Something else -- Yes\n\n'))
+    print ('________________________________________________________')
